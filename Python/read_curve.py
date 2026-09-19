@@ -6,6 +6,8 @@ SERIAL_PORT = "COM5" # Must match operating system
 
 BAUD_RATE = 115200
 TIMEOUT_S = 5
+# Changes title above matplotlib graph
+DEVICE = "1N4148"
 
 def run_sweep(port: str, baud: int):
 
@@ -23,6 +25,7 @@ def run_sweep(port: str, baud: int):
         # Begin esp32 curve tracing program by sending "RUN" command
         print("Sending RUN")
         ser.write(b"RUN\n")
+        print("Tracing. This may take a while.")
 
         v_diode_list = []
         current_list = []
@@ -59,14 +62,14 @@ def run_sweep(port: str, baud: int):
 def plot_curve(v_diode, current_mA):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
  
-    # Linear I-V curve
+    # Linear I-V curve (ax1)
     ax1.plot(v_diode, current_mA, marker=".", markersize=2, linewidth=1)
     ax1.set_xlabel("Diode voltage (V)")
     ax1.set_ylabel("Current (mA)")
-    ax1.set_title("1N4148 I-V curve")
+    ax1.set_title(DEVICE + " I-V curve")
     ax1.grid(True, alpha=0.3)
  
-    # Semi-log plot: exponential region should look like a straight line
+    # Semi-log plot exponential to linear (ax2)
     positive = [(v, i) for v, i in zip(v_diode, current_mA) if i > 0]
     if positive:
         v_pos, i_pos = zip(*positive)
@@ -77,6 +80,7 @@ def plot_curve(v_diode, current_mA):
     ax2.grid(True, which="both", alpha=0.3)
  
     fig.tight_layout()
+    print("Displaying graph.")
     plt.show()
  
  

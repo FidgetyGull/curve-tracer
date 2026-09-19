@@ -31,7 +31,7 @@ Adafruit_MCP4725 dac;
 Adafruit_ADS1115 ads;
 
 // ---- Configuration ----
-const float R_SENSE = 1000;     //in ohms
+const float R_SENSE = 1000;     // ohms
 const int   DAC_STEP = 8;       // DAC code step size, 0-4095 (smaller = more points, slower)
 const int   SETTLE_MS = 3;      // settle time after each DAC write, ms
 const int   SAMPLES_TO_AVG = 4; // ADC oversampling per reading (bigger = less noise, slower)
